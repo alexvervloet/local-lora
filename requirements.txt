@@ -1,0 +1,5 @@
+# Apple Silicon only — MLX is Metal-backed.
+mlx-lm>=0.20
+# mlx-lm 0.31.x crashes at import with transformers 5.x
+# (AutoTokenizer.register signature change). Pin until mlx-lm catches up.
+transformers<5
