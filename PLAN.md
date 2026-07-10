@@ -60,7 +60,12 @@ is also a valid (and publishable) result.
       but the *same* 200-iter LoRA lifts it to 100%/80% — identical to the tuned 3B.
       Gain 3B: +40/+60; gain 1B: +100/+80. On this narrow task a tuned 1B fully
       closes the gap to a tuned 3B at ~⅓ the params.
-- [ ] Fuse the adapter and serve it via LM Studio/Ollama to close the loop
+- [x] Fuse the adapter and serve it via LM Studio/Ollama to close the loop —
+      `./fuse.sh` merges the adapter into a standalone `fused/` model (4-bit, 1.8 GB).
+      Verified headless: `mlx_lm` loads `fused/` with **no adapter flag** and a
+      "charged twice" ticket returns `category: billing | reply: …` in-format.
+      Serving documented in the README: `mlx_lm.server` (OpenAI-compatible, $0),
+      LM Studio (point at `fused/`), Ollama (`EXPORT_GGUF=1 ./fuse.sh` → GGUF → Modelfile).
 
 ## Notes / gotchas discovered along the way
 
