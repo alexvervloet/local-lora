@@ -36,6 +36,7 @@ python evaluate.py                   # base vs adapter on the held-out eval set
 | `sweep.py` | Phase 3: train at several `--iters` and score each on the held-out set |
 | `fuse.sh` | Phase 3: merge the adapter into a standalone model for local serving |
 | `PLAN.md` | Definition of done + results table |
+| `LESSONS.md` | What the process taught — eval-gate discipline, overfitting signals, the 1B-vs-3B result |
 
 ## Serving the fused model (Phase 3)
 
