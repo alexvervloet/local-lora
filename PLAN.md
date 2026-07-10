@@ -32,6 +32,8 @@ is also a valid (and publishable) result.
 |---|---|---|---|---|
 | Llama-3.2-3B-Instruct-4bit | base | 60% | 20% | Phase 1 baseline, 10 held-out rows (2026-07-10) |
 | Llama-3.2-3B-Instruct-4bit | + LoRA | 100% | 80% | 200 iters, r=16 default; SHIP (2026-07-10) |
+| Llama-3.2-1B-Instruct-4bit | base | 0% | 0% | Phase 3 size comparison — untuned 1B never emits the format |
+| Llama-3.2-1B-Instruct-4bit | + LoRA | 100% | 80% | same 200-iter recipe; matches the tuned 3B exactly |
 
 ## Phase 3 — stretch (optional)
 
@@ -52,7 +54,12 @@ is also a valid (and publishable) result.
       (0.708 → 0.884) while train loss craters — textbook overfitting. So the shipped
       200-iter run is past diminishing returns; ~100 iters buys the same held-out
       result. (The 50-iter 30% dip is eval noise — 10 rows, ±10pts each.)
-- [ ] Try a second base model size (1.5B vs 3B): does the smaller one gain more?
+- [x] Try a second base model size (1.5B vs 3B): does the smaller one gain more?
+      Used **1B** (not 1.5B) to keep it in the Llama-3.2 family and isolate size.
+      **Yes, dramatically:** the untuned 1B scores 0%/0% (never emits the format),
+      but the *same* 200-iter LoRA lifts it to 100%/80% — identical to the tuned 3B.
+      Gain 3B: +40/+60; gain 1B: +100/+80. On this narrow task a tuned 1B fully
+      closes the gap to a tuned 3B at ~⅓ the params.
 - [ ] Fuse the adapter and serve it via LM Studio/Ollama to close the loop
 
 ## Notes / gotchas discovered along the way
