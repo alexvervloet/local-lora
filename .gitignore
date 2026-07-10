@@ -6,6 +6,7 @@ __pycache__/
 .env
 .history/
 adapters/
+fused/
 data/
 results/
 .pytest_cache/
