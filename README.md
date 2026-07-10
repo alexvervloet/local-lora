@@ -1,8 +1,8 @@
 # local-lora — fine-tune real weights on this Mac, and prove it helped
 
-The [fine-tuning deep dive](../DeepDives/fine-tuning-deep-dive/) teaches the
-whole discipline — dataset, validation, train, and the eval gate that only
-ships a model that *provably* beats the baseline — but its trainer is a mock.
+The [fine-tuning deep dive](https://github.com/alexvervloet/ai-engineering-deep-dive/tree/main/fine-tuning-deep-dive)
+teaches the whole discipline — dataset, validation, train, and the eval gate that
+only ships a model that *provably* beats the baseline — but its trainer is a mock.
 This project swaps the mock for **real weights**: a LoRA fine-tune of a small
 open model, trained locally with **MLX** on Apple Silicon, evaluated with the
 same held-out-set discipline.
@@ -13,6 +13,18 @@ model does — measured, not vibed.
 
 **Cost: $0.** MLX trains on this machine's unified memory. No API key is used
 anywhere in this repo.
+
+## Prerequisites
+
+This repo reads its dataset from the deep dive at data-prep and eval time, so it
+expects the [`ai-engineering-deep-dive`](https://github.com/alexvervloet/ai-engineering-deep-dive)
+repo checked out **as a sibling folder** (`check_setup.py` verifies this):
+
+```bash
+git clone git@github.com:alexvervloet/ai-engineering-deep-dive.git DeepDives
+git clone git@github.com:alexvervloet/local-lora.git
+cd local-lora        # DeepDives/ now sits one level up, where the scripts expect it
+```
 
 ## Quickstart
 

@@ -1,6 +1,6 @@
 # LESSONS
 
-Engineering lessons from swapping the [fine-tuning deep dive](../DeepDives/fine-tuning-deep-dive/)'s
+Engineering lessons from swapping the [fine-tuning deep dive](https://github.com/alexvervloet/ai-engineering-deep-dive/tree/main/fine-tuning-deep-dive)'s
 *mock* trainer for **real LoRA weights** on this Mac (MLX, Llama-3.2 1B/3B). The
 dive teaches the discipline — dataset, validation, train, and an eval gate that
 only ships a model that *provably* beats its base. Doing it for real, most of
@@ -9,10 +9,9 @@ fine-tune actually helped.** A loss curve is easy to produce; evidence is not.
 Each is tied to the concrete run that taught it. Kept as a running log.
 
 Sibling logs in the parent folder learned overlapping lessons from other angles —
-[`rag-at-scale/LESSONS.md`](../rag-at-scale/LESSONS.md) (don't fool yourself with
-your own benchmark numbers) and [`remote-jobs-digest/LESSONS.md`](../remote-jobs-digest/LESSONS.md)
-(local runners lie; observe the result, not the knob) — cross-referenced below
-where they recur.
+`rag-at-scale` (don't fool yourself with your own benchmark numbers) and
+`remote-jobs-digest` (local runners lie; observe the result, not the knob) —
+cross-referenced by section below where they recur.
 
 ---
 
@@ -43,8 +42,8 @@ unsolved one into a middling number that told you nothing about where to push.
 
 Takeaway: when a task bundles a mechanical part and a semantic part, measure them
 on separate axes. The average of "instant" and "hard" is a number that describes
-neither. (Same shape as [rag-at-scale §1](../rag-at-scale/LESSONS.md): name the
-subsystem your number actually measures.)
+neither. (Same shape as rag-at-scale's §1: name the subsystem your number actually
+measures.)
 
 ## 3. More training is not more skill — watch train and val diverge for the stop signal
 
@@ -60,8 +59,7 @@ produced the same model for a quarter of the compute.
 Takeaway: extra training tokens buy tighter fit to the training set, not more
 generalization. When train loss falls while val loss rises, stop — the curve is
 telling you the exact iteration where learning turned into memorizing. (Directly
-parallel to [remote-jobs §9](../remote-jobs-digest/LESSONS.md): more reasoning is
-not more accuracy.)
+parallel to remote-jobs-digest's §9: more reasoning is not more accuracy.)
 
 ## 4. On a tiny eval set, measure the noise before you rank configs
 
@@ -77,8 +75,8 @@ held across every config (format pinned at 100%) or moved monotonically (val los
 Takeaway: before declaring one configuration better than another, work out your
 measurement's resolution. On a 10-row eval, a 10-point difference is a rounding
 artifact, not a result — rank on signals that survive the noise, and never crown a
-"best" from one run of one point. (Cousin of [rag-at-scale §2](../rag-at-scale/LESSONS.md):
-don't draw the curve from points too small to carry it.)
+"best" from one run of one point. (Cousin of rag-at-scale's §2: don't draw the
+curve from points too small to carry it.)
 
 ## 5. Fine-tuning's payoff is largest where the base is weakest
 
@@ -106,8 +104,7 @@ set, so leakage isn't something to vigilantly avoid — it's structurally imposs
 Takeaway: when a correctness property depends on two things never mixing, separate
 them physically so mixing them isn't an available move. A boundary you have to
 remember to honor is a boundary you'll eventually forget. (Same principle as
-[remote-jobs §15](../remote-jobs-digest/LESSONS.md): draw boundaries with
-directories, not discipline.)
+remote-jobs-digest's §15: draw boundaries with directories, not discipline.)
 
 ## 7. The smoke run is the truth about a shifting toolchain — and verify the fused artifact behaves
 
@@ -124,5 +121,5 @@ proof the merge worked; the exit code isn't.
 
 Takeaway: a pinned, self-hosted ML stack deviates from the docs in undocumented
 ways — treat the smoke run and a real end-to-end generation as the source of truth,
-not the version numbers or a clean exit. (This is [remote-jobs §5](../remote-jobs-digest/LESSONS.md),
-"local runners have real, undocumented quirks," in a training harness.)
+not the version numbers or a clean exit. (This is remote-jobs-digest's §5, "local runners have real,
+undocumented quirks," in a training harness.)
