@@ -31,9 +31,27 @@ python evaluate.py                   # base vs adapter on the held-out eval set
 | Path | What it is |
 |---|---|
 | `convert_data.py` | Pulls the deep dive's chat-format datasets into `data/` for MLX |
-| `train.sh` | The `mlx_lm.lora` invocation — model, iters, adapter output |
+| `train.sh` | The `mlx_lm.lora` invocation — model, iters, adapter output (`MODEL=`/`ADAPTER=` overridable) |
 | `evaluate.py` | The gate: base vs adapter on `support_eval.jsonl`, same scorer idea as the dive |
+| `sweep.py` | Phase 3: train at several `--iters` and score each on the held-out set |
+| `fuse.sh` | Phase 3: merge the adapter into a standalone model for local serving |
 | `PLAN.md` | Definition of done + results table |
+
+## Serving the fused model (Phase 3)
+
+`./fuse.sh` merges the adapter back into the base so the result is one standalone
+model — no adapter flag needed. It lands in `fused/` (4-bit, ~1.8 GB). Then, all $0
+and local:
+
+```bash
+python -m mlx_lm generate --model fused --prompt "..."   # smoke test
+python -m mlx_lm server   --model fused                  # OpenAI-compatible API on :8080
+```
+
+- **LM Studio** — point it at this repo's `fused/` folder; it runs MLX models directly.
+- **Ollama** — needs GGUF, not MLX. Re-run `EXPORT_GGUF=1 ./fuse.sh` to also write a
+  dequantized f16 `.gguf`, then `ollama create <name> -f Modelfile` with a Modelfile
+  whose `FROM` points at that file.
 
 ## Honest scoping
 
