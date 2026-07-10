@@ -35,7 +35,23 @@ is also a valid (and publishable) result.
 
 ## Phase 3 — stretch (optional)
 
-- [ ] Sweep one knob (iters or LoRA rank) and record the tradeoff
+- [x] Sweep one knob (iters or LoRA rank) and record the tradeoff — `python sweep.py`
+      (2026-07-10, 3B base, same 10 held-out rows):
+
+      | iters | val loss | format | category |
+      |---|---|---|---|
+      | base | — | 60% | 20% |
+      | 25 | 0.708 | 100% | 90% |
+      | 50 | 0.763 | 100% | 30% |
+      | 100 | 0.835 | 100% | 80% |
+      | 200 | 0.838 | 100% | 80% |
+      | 400 | 0.884 | 100% | 80% |
+
+      **Tradeoff:** format is learned almost instantly (100% by iter 25, flat after);
+      category plateaus ~80% by iter 100. Crucially **val loss *rises* past iter 25**
+      (0.708 → 0.884) while train loss craters — textbook overfitting. So the shipped
+      200-iter run is past diminishing returns; ~100 iters buys the same held-out
+      result. (The 50-iter 30% dip is eval noise — 10 rows, ±10pts each.)
 - [ ] Try a second base model size (1.5B vs 3B): does the smaller one gain more?
 - [ ] Fuse the adapter and serve it via LM Studio/Ollama to close the loop
 
