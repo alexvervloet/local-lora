@@ -19,17 +19,19 @@ is also a valid (and publishable) result.
 
 ## Phase 2 — train and gate
 
-- [ ] Full `./train.sh`, then `python evaluate.py` (base vs adapter, same set)
-- [ ] If the adapter doesn't clearly win: grow the training set by distillation
-      (generate more labeled examples with a stronger local model, validate them,
-      retrain). The dive's example 08 pattern, local teacher, $0.
+- [x] Full `./train.sh` (200 iters, val loss 4.67 → 0.84), then `python evaluate.py`
+      (base vs adapter, same set). **2026-07-10: SHIP** — adapter wins on both axes.
+- [x] ~~If the adapter doesn't clearly win: grow the training set by distillation~~
+      Not needed — the adapter clearly won (format 60→100%, category 20→80%). The
+      distillation fallback (dive's example 08, local teacher, $0) stays documented
+      here for if a future base/knob regresses.
 
 ## Results
 
 | model | variant | format adherence | category accuracy | notes |
 |---|---|---|---|---|
 | Llama-3.2-3B-Instruct-4bit | base | 60% | 20% | Phase 1 baseline, 10 held-out rows (2026-07-10) |
-| Llama-3.2-3B-Instruct-4bit | + LoRA | | | Phase 2 |
+| Llama-3.2-3B-Instruct-4bit | + LoRA | 100% | 80% | 200 iters, r=16 default; SHIP (2026-07-10) |
 
 ## Phase 3 — stretch (optional)
 
