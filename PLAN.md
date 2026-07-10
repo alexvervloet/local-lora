@@ -6,14 +6,16 @@ is also a valid (and publishable) result.
 
 ## Phase 0 — plumbing
 
-- [ ] `python check_setup.py` all green
-- [ ] `python convert_data.py` writes `data/train.jsonl` + `data/valid.jsonl`
-- [ ] `./train.sh --iters 10` smoke run completes and writes an adapter
+- [x] `python check_setup.py` all green
+- [x] `python convert_data.py` writes `data/train.jsonl` + `data/valid.jsonl`
+- [x] `./train.sh --iters 10` smoke run completes and writes an adapter
 
 ## Phase 1 — the honest baseline
 
-- [ ] `python evaluate.py --base-only` — score the *base* model on the eval set
+- [x] `python evaluate.py --base-only` — score the *base* model on the eval set
       (format adherence + category accuracy). Record it before training anything.
+      **2026-07-10:** base `Llama-3.2-3B-Instruct-4bit` = format **60%**, category
+      **20%** on the 10 held-out rows. This is the bar the adapter must clear.
 
 ## Phase 2 — train and gate
 
@@ -26,8 +28,8 @@ is also a valid (and publishable) result.
 
 | model | variant | format adherence | category accuracy | notes |
 |---|---|---|---|---|
-| (base id) | base | | | |
-| (base id) | + LoRA | | | |
+| Llama-3.2-3B-Instruct-4bit | base | 60% | 20% | Phase 1 baseline, 10 held-out rows (2026-07-10) |
+| Llama-3.2-3B-Instruct-4bit | + LoRA | | | Phase 2 |
 
 ## Phase 3 — stretch (optional)
 
