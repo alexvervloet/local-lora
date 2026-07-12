@@ -26,7 +26,7 @@ FORMAT_RE = re.compile(r"^category:\s*(account|billing|technical|other)\s*\|\s*r
 
 
 def load_eval_rows() -> list[dict]:
-    rows = [json.loads(l) for l in EVAL_SET.read_text().splitlines() if l.strip()]
+    rows = [json.loads(line) for line in EVAL_SET.read_text().splitlines() if line.strip()]
     out = []
     for row in rows:
         msgs = row["messages"]
@@ -50,7 +50,8 @@ def run_model(rows: list[dict], model: str, adapter: str | None) -> dict:
     # Imported here so --help works on machines without mlx installed.
     from mlx_lm import generate, load
 
-    llm, tokenizer = load(model, adapter_path=adapter)
+    # load() is typed as a union with a 3-tuple (return_config=True) variant.
+    llm, tokenizer, *_ = load(model, adapter_path=adapter)
     fmt_hits = cat_hits = 0
     for row in rows:
         prompt = tokenizer.apply_chat_template(

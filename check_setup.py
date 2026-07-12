@@ -29,9 +29,9 @@ check(
 )
 
 try:
-    import mlx.core  # noqa: F401
+    import mlx.core
 
-    check("package: mlx", True)
+    check(f"package: mlx ({getattr(mlx.core, '__version__', '?')})", True)
 except ImportError:
     check("package: mlx", False, "pip install -r requirements.txt")
 
