@@ -27,8 +27,9 @@ def main() -> None:
 
     DATA.mkdir(exist_ok=True)
     # Deterministic split: every 5th row goes to valid (keeps categories mixed).
-    valid = rows[::5][:VALID_ROWS]
-    train = [r for r in rows if r not in valid]
+    valid_idx = set(list(range(0, len(rows), 5))[:VALID_ROWS])
+    valid = [rows[i] for i in sorted(valid_idx)]
+    train = [r for i, r in enumerate(rows) if i not in valid_idx]
 
     (DATA / "train.jsonl").write_text("".join(json.dumps(r) + "\n" for r in train))
     (DATA / "valid.jsonl").write_text("".join(json.dumps(r) + "\n" for r in valid))
