@@ -1,0 +1,8 @@
+{
+  "venvPath": ".",
+  "venv": ".venv",
+  "pythonVersion": "3.13",
+  "typeCheckingMode": "standard",
+  "exclude": ["**/__pycache__", ".venv", "adapters", "fused", "data"],
+  "reportUnusedImport": "error"
+}
